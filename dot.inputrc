@@ -1,0 +1,19 @@
+#
+# $Id: dot.inputrc 2740 2007-05-13 17:37:28Z rafan $
+#
+# http://members.optushome.com.au/emikulic/misc/putty-freebsd.html
+# http://tic-tac.ru/putty-freebsd.html
+#"\x7F": backward-delete-char
+"\e[3~": delete-char
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+# CJK
+set convert-meta off
+set input-meta on
+set output-meta on
+set convert-meta off
+#
+set editing-mode vi
+
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward

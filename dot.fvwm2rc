@@ -1,0 +1,332 @@
+
+ImagePath /usr/share/icons:/usr/local/share/icons:/usr/share/pixmaps:/usr/include/X11/pixmaps:/usr/local/share/icons:/usr/include/X11/bitmaps:/usr/X11R6/include/bitmaps
+
+Read pre.hook Quiet
+
+# Color of TitleBar and Border
+SetEnv COLOR      rgb:22/22/44
+SetEnv HICOLOR    rgb:44/44/66
+SetEnv FG_COLOR   rgb:44/44/44
+SetEnv FG_HICOLOR rgb:d0/d0/d0
+
+SetEnv IconSize	96
+
+DeskTopSize	3x2
+EdgeScroll	0 0
+
+
+#
+# Color 0: Menu
+# Color 1: Active Item in Menu
+# Color 2: Inactive Desk in Pager
+#
+Colorset 0 fg #ffffff, bg #bfcad9, fgsh #000000, NoShape, RootTransparent, Tint #283e5e 60
+Colorset 1 fg #333366, fgsh #bfcad9, bg #ddddee, hi #ffffff, sh #9a9a9a
+Colorset 2 Transparent, fg White
+#Colorset 3 fg #bbbbbb, bg #112255
+#Colorset 4 fg #eeeeee, bg #223388
+
+
+
+#Style "*"		Font "Shadow=1 1 SE:xft:Sans Serif:bold:size=10:encoding=iso10646"
+#Style "*"		Colorset 3, HilightColorset 4
+Style "*"		UseDecor default-decor
+Style "*"		BorderWidth 2
+Style "*"		HandleWidth 5
+Style "*"		MWMFunctions
+Style "*"		MWMBorder
+Style "*"		MWMDecor
+Style "*"		DecorateTransient
+Style "*"		NoPPosition
+Style "*"		IconBox 0 -50 -1 -1
+Style "*"		ClickToFocus
+Style "*"		MouseFocusClickRaises
+Style "*"		MinOverlapPlacement
+#Style "*"		NoIconTitle
+Style "*"		UseStyle default-style
+Style "*"		Icon default.xbm
+Style "*"		BorderWidth 4, HandleWidth 4, ForeColor $[FG_COLOR],\
+			BackColor $[COLOR], HilightFore $[FG_HICOLOR],\
+			HilightBack $[HICOLOR]
+
+
+Style "Fvwm*"		NoTitle
+Style "Fvwm*"		WindowListSkip
+Style "Fvwm*"		CirculateSkip
+
+Style "FvwmButtons"	Sticky
+Style "FvwmIconBox"	Sticky
+Style "FvwmPager"	Sticky, StaysOnBottom, NoHandles, BorderWidth 0, \
+			ParentalRelativity
+Style "FvwmIdent"	Title, WindowListHit, CirculateHit
+Style "FvwmConsole"	WindowListHit, CirculateHit
+Style "fvwm_menu"	UsePPosition
+
+
+
+Style "XMMS Playlist*"	WindowListSkip
+Style "gkrellm"		Sticky, WindowListSkip, NeverFocus
+Style "gDesklets"	Sticky, WindowListSkip, NeverFocus
+Style "satellite_pic"	Sticky, WindowListSkip, NoTitle
+Style "The GIMP"	RaiseTransient, LowerTransient, StackTransientParent
+
+Style "_RootText_"	Sticky, WindowListSkip, CirculateSkip, StaysOnBottom, \
+			NoHandles, BorderWidth 0, NoTitle, ParentalRelativity
+
+
+
+DestroyDecor default-decor
+AddToDecor default-decor
++ ButtonStyle Reset
++ ButtonStyle 2 Vector 17 20x20@1 30x20@1 50x40@1 70x20@1 80x20@1 80x30@0 \
+                           60x50@0 80x70@0 80x80@0 70x80@0 50x60@0 30x80@0 \
+                           20x80@0 20x70@1 40x50@1 20x30@0 20x20@1
+
++ ButtonStyle 4 Vector 5 25x75@0 75x75@0 75x25@0 25x25@1 25x75@1
++ ButtonStyle 6 Vector 4 50x75@1 25x25@1 75x25@1 50x75@0
+
+
+#
+# Section: Menus
+#
+# This section defines a small menu structure.  The main menu contains
+# some typical entries, and uses a hook (main-menu.hook) to allow the
+# user to add new entries.  Most of the default entries are submenus,
+# which are also defined here.
+#
+
+#
+# MWM style menus are easier to use and better for Windows refugees.
+#
+
+MenuStyle "*" mwm, MenuColorset 0, ActiveColorset 1
+MenuStyle "*" Hilight3DThin, TitleUnderlines2, TrianglesSolid, HilightBack
+MenuStyle "*" Font "Shadow=1 1 SE:xft:Arial Black:bold:size=8:encoding=iso10646"
+#MenuStyle * ItemFormat "%.2|%.5i%.5l%.5i%2.3>%2|"
+
+
+Read /etc/X11/fvwm/DebianMenu Quiet
+
+
+# Tack a quit entry on to the end; this version uses a pop-up menu to ask
+# the user to confirm, MWM-style (?).  The second line may be changed as
+# indicated to use a popup form instead.  (The QuitVerify form is defined
+# in system.warnings, read in later.)
+AddToMenu /Debian
++  ""            Nop
++  "Exit Fvwm"   Popup Quit-Verify
+# or:
+# +  "Exit Fvwm"   Module FvwmForm QuitVerify
+
+DestroyMenu CustomizedMenu
+AddToMenu CustomizedMenu "  My Menu  " Title
++ "urxvt"		Exec exec /usr/bin/urxvt
++ "mlterm"		Exec exec /usr/bin/mlterm
++ "FireFox"		Exec exec /usr/bin/firefox
++ "xpdf"		Exec exec /usr/bin/xpdf
++ "Gaim"		Exec exec /usr/bin/gaim
++ "Skype"		Exec exec /usr/bin/skype
++ "RealPlayer"		Exec exec /home/victor/usr/RealPlayer/realplay
++ "xmms"		Exec exec /usr/bin/xmms
++ "VMware"		Exec exec /usr/local/bin/vmware
++ ""			Nop
++ "xlock"		Exec exec /usr/X11R6/bin/xlock -mode blank -logoutButton 60
+
+DestroyMenu MoveWindowToPageMenu
+AddToMenu MoveWindowToPageMenu "Move window to another page" Title
++ "Page up"		MoveToPage +0p -1p
++ "Page left"		MoveToPage -1p  0p
++ "Page right"		MoveToPage +1p  0p
++ "Page down"		MoveToPage +0p +1p
+
+DestroyMenu Window-Ops
+AddToMenu Window-Ops "Window Ops" Title
++ "Move Window"			Popup MoveWindowToPageMenu
++ "(Un)Shade"			WindowShade
++ ""				Nop
++ "Screen Shot"			Screenshot
++ "Ident"			Module FvwmIdent
++ ""				Nop
++ "Destroy"			Destroy
++ "Close"			Close
+
+
+#
+# The Quit-Verify menu checks that the user really wants to exit.
+#
+
+DestroyMenu Quit-Verify
+AddToMenu Quit-Verify "Really quit FVWM?" Title
++ "No, restart Fvwm"	Restart
++ ""			Nop
++ "Yes, really quit"	Quit
+
+#
+# Section: Mouse bindings
+#
+# Moving and resizing, depending on which part of the window
+# you grab (T=title bar, S=side/top/bottom, F=corner).
+#
+
+Mouse 1 R A Menu CustomizedMenu
+Mouse 2 R A WindowList
+Mouse 3 R A Menu /Debian
+
+Mouse 0 T A raise-and-move-or-raiselower
+Mouse 0 F A resize-or-raise
+Mouse 0 S A resize-or-raise
+Mouse 0 I A move-or-winmenu-or-deiconify
+Mouse 1 T A move-on-mousemove
+Mouse 1 W M raise-and-move
+Mouse 1 I N DeThumbnail
+Mouse 3 I N Menu Window-Ops
+
+Mouse 0 1 A Popup Window-Ops
+Mouse 0 2 A Close
+Mouse 0 6 A Thumbnail
+Mouse 1 4 A Maximize 0 -90p
+Mouse 2 4 A Maximize -80p -90p
+Mouse 3 4 A Maximize -80p 0
+
+
+#
+# Section: Key bindings
+#
+
+
+Key Up    A    CM   GotoPage  0p -1p
+Key Down  A    CM   GotoPage  0p  1p
+Key Left  A    CM   GotoPage -1p  0p
+Key Right A    CM   GotoPage  1p  0p
+Key Print A    N    RootScreenshot
+
+#Key Escape A   M    Popup CustomizedMenu
+Key Tab   A    M    WindowList Root c c NoDeskSort, CurrentAtEnd
+
+
+Key F3    A    M    Module FvwmConsole
+
+
+DestroyModuleConfig FvwmPager*
+*FvwmPagerColorset	* 2
+*FvwmPagerBack		SlateGrey
+*FvwmPagerFore		Black
+*FvwmPagerFont		none
+*FvwmPagerHilight	SlateBlue4
+*FvwmPagerGeometry	-5-95
+*FvwmPagerSmallFont	"xft:Bitstream Cyberbit:size=7"
+*FvwmPagerDeskTopScale	24
+
+#
+# Section: Functions
+#
+# The following functions operate on a window or menu.  The
+# names are systematic: foo means "do foo"; foo-or-bar means
+# "do foo, if mouse is moving, bar if click"; and foo-or-bar-or-baz
+# adds "baz, if double-clicked".
+#
+
+DestroyFunc StartFunction
+AddToFunc StartFunction
++ "I" Test (Init) Read start.hook
++ "I" Module FvwmPager *
+
+DestroyFunc InitFunction
+AddToFunc InitFunction
+Read init.hook Quiet
+
+DestroyFunc RestartFunction
+AddToFunc RestartFunction
+Read restart.hook Quiet
+
+# Override the default behavior
+DestroyFunc WindowListFunc
+AddToFunc   WindowListFunc
++ "I" WindowId $0 Iconify off
++ "I" WindowId $0 FlipFocus
++ "I" WindowId $0 Raise
+
+DestroyFunc move-on-mousemove
+AddToFunc   move-on-mousemove
++ "M" Move
++ "D" WindowShade
+
+DestroyFunc move-or-winmenu-or-deiconify
+AddToFunc   move-or-winmenu-or-deiconify
++ "M" Move
++ "C" Popup Window-Ops
++ "D" Iconify
+
+DestroyFunc deiconify-and-focus
+AddToFunc   deiconify-and-focus
++ "I" Iconify -1
++ "I" Focus NoWarp
+
+DestroyFunc move-or-raiselower
+AddToFunc   move-or-raiselower
++ "M" Move
++ "C" RaiseLower
+
+DestroyFunc raise-and-move
+AddToFunc   raise-and-move
++ "M" Raise
++ "M" Move
+
+DestroyFunc raise-and-move-or-raiselower
+AddToFunc   raise-and-move-or-raiselower
++ "M" Move
++ "M" Raise
++ "C" RaiseLower
+
+DestroyFunc resize-or-raise
+AddToFunc   resize-or-raise
++ "M" Resize
++ "C" Raise
+
+DestroyFunc Thumbnail
+AddToFunc Thumbnail
++ "I" Raise
++ "I" SetEnv Icon-$[w.id] $[w.iconname]
++ "I" ThisWindow (!Shaded, Iconifiable, !Iconic) PipeRead \
+    "xwd -silent -id $[w.id] | convert -scale $[IconSize] -frame 1x1 \
+    -mattecolor Black -quality 0 xwd:- png:/tmp/icon.tmp.$[w.id].png \
+    && echo WindowStyle IconOverride, Icon /tmp/icon.tmp.$[w.id].png \
+    || echo Nop"
++ "I" Iconify
+
+DestroyFunc DeThumbnail
+AddToFunc DeThumbnail
++ "I" Raise
++ "I" PipeRead "echo WindowStyle Icon \\$\\[Icon-$[w.id]\\]"
++ "I" UnsetEnv Icon-$[w.id]
++ "I" Exec exec rm -f /tmp/icon.tmp.$[w.id].png
++ "I" Iconify
+
+DestroyFunc RootScreenshot
+AddToFunc RootScreenshot
++ "I" ThisWindow PipeRead "xwd -silent -root | convert -quality 0 xwd:- png:/tmp/screenshot.png"
+
+DestroyFunc Screenshot
+AddToFunc Screenshot
++ "I" ThisWindow PipeRead "xwd -silent -id $[w.id] | convert -quality 0 xwd:- png:/tmp/screenshot.png"
+
+# We start the pager in the InitFunction and RestartFunction, so that the
+# user has control over whether it starts or not.  We do this by placing
+# it in the system init-restart.hook, so that either the administrator
+# can remove it or infividual users can kill it or set it up differently
+# by placing something like the following in their personal
+# init-restart.hook:
+#    + "I" Wait FvwmPager
+#    + "I" KillModule FvwmPager
+#    + "I" Module FvwmPager 0 3
+
+# This reads in various warning styles and checks for the presence or
+# not of ~/.fvwm and ~/.fvwm2.
+# Read /etc/X11/fvwm/system.warnings
+
+#
+# Section: post.hook
+#
+
+Read /etc/X11/fvwm/post.hook Quiet
+Read post.hook Quiet

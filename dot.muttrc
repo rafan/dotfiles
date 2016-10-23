@@ -1,0 +1,48 @@
+#
+# $Id: dot.muttrc 2916 2009-04-05 09:44:26Z rafan $
+#
+# for Big5
+#set charset=big5
+#set locale="zh_TW.Big5"
+set send_charset="us-ascii:iso-8859-1:big5:gb2312:utf-8"
+charset-hook us-ascii big5
+charset-hook iso-8859-1 big5
+#set bbsislame=yes
+set use_8bitmime=yes
+
+set assumed_charset="big5:gb2312:iso-2022-jp:euc-jp:shift_jis:utf-8"
+
+#
+#set hdrs
+#my_hdr From: Rong-En Fan <b90098@csie.ntu.edu.tw>
+set from="Rong-En Fan <rafan@infor.org>"
+set edit_headers=yes
+set implicit_autoview=yes
+set hostname="csie.ntu.edu.tw"
+set realname="Rong-En Fan"
+
+set record=+sent-mail		# save copies of outgoing messages in +outbox
+set postponed=+postponed	# mailbox to store postponed messages in
+set fast_reply			# skip initial prompts when replying
+set alias_file=~/.mail_aliases
+#set folder_format="%2C %t %N %-8.8u %8s %d %f"
+set index_format="%4C %Z %{%b %d} %-15.15L (%5c) %s"
+mailboxes `(echo $MAIL && find ~/Mail -type f)  | perl -pe "s/\n/ /g; s!$HOME/Mail/!=!g;"`
+
+#
+color hdrdefault brightcyan black
+color quoted cyan black
+color signature brightred black
+color indicator brightyellow red
+color error brightred black
+color status brightyellow blue
+color tree brightmagenta black	# the thread tree in the index menu
+color tilde brightmagenta black
+color message brightcyan black
+#color normal brightwhite black
+color attachment brightmagenta black
+color search black green	# how to hilite search patterns in the pager
+color header brightyellow black ^(From|Subject):
+color body brightyellow black "(ftp|http)://[^ ]+"	# point out URLs
+color body brightcyan black [-a-z_0-9.]+@[-a-z_0-9.]+	# e-mail addresses
+color underline brightgreen black

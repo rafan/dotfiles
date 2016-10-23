@@ -1,0 +1,15 @@
+[color]
+branch = always
+diff = always
+
+[merge]
+tool = vimdiff
+
+[alias]
+co = checkout
+ci = commit
+st = status
+di = diff
+
+[user]
+name = Rong-En Fan
