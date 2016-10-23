@@ -11,5 +11,5 @@ ci = commit
 st = status
 di = diff
 
-[user]
-name = Rong-En Fan
+[include]
+    path = ~/.gitconfig.local
