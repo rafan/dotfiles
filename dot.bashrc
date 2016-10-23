@@ -182,7 +182,7 @@ function ss() {
 }
 
 # stuff that only needs when i login
-if [ -t 0 -a -x /usr/local/bin/keychain -a -r $HOME/.ssh/id_rsa.pub ]; then
+if [ -t 0 -a -x /usr/local/bin/keychain ]; then
 
 	# SSH Key
 	if [ -f $HOME/.keychain/${HOSTNAME}-sh ]; then
