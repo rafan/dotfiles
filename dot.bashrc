@@ -5,34 +5,14 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/bin:/usr/local/sbin:/usr/X11R6/bin:$HOME/bin; export PATH
 
 OS=${OSTYPE/[^a-z]*/}
-OSM=${OSTYPE/.[0-9]*/}
 
 shopt -s histappend
 
 export BLOCKSIZE=K;
 
-export EDITOR=/usr/local/bin/vim
-export VISUAL=/usr/local/bin/vim
-
-if [ "${OS}" = "linux" ]; then
-	export EDITOR=/usr/bin/vim
-	export VISUAL=/usr/bin/vim
-fi	
-
-if [ "${OS}" = "cygwin" ]; then
-	export EDITOR=/bin/vim
-	export VISUAL=/bin/vim
-fi	
-
-export PAGER=/usr/bin/less
-
-if [ "${OS}" = "cygwin" ]; then
-	export PAGER=/bin/less
-fi
-
-if [ "${OS}" = "solaris" ]; then
-	export PAGER=/usr/local/bin/less
-fi
+export EDITOR=vim
+export VISUAL=vim
+export PAGER=less
 
 # make mail(1) happy:
 crt=24;		export crt
@@ -41,20 +21,12 @@ MAILCHECK=600;	export MAILCHECK
 export CLICOLOR_FORCE
 export LANG=zh_TW.UTF-8
 _ENG_LOCALE=en_US.UTF-8
-if [ "$OSM" = "freebsd4" ]; then
-	export LANG=zh_TW.Big5
-	_ENG_LOCALE=en_US.ISO8859-1
-elif [ "$OS" = "cygwin" ]; then
-	export LANG=C
-fi
 export LC_MESSAGES=C
 export LC_TIME=C
 export LESS="-giMnrSw"
 export LSCOLORS="Gxfxcxdxbxegedabagacad" # FreeBSD only
 export LS_COLORS='di=1;36:ln=0;35:so=0;32:pi=0;33:ex=0;31:bd=0;34;46:cd=0;34;43' # Linux only
 export HISTTIMEFORMAT="%F %T "
-
-export FIGNORE=.svn:CVS
 
 function color_prompt
 {
@@ -131,15 +103,6 @@ alias wall="env LC_CTYPE=${_ENG_LOCALE} /usr/bin/wall"
 alias write="env LC_CTYPE=${_ENG_LOCALE} /usr/bin/write"
 alias zg="/usr/bin/zgrep --mmap"
 
-# FreeBSD.org
-alias dcvs="env CVS_RSH=ssh cvs -d rafan@dcvs.FreeBSD.org:/home/dcvs"
-alias pcvs="env CVS_RSH=ssh cvs -d rafan@pcvs.FreeBSD.org:/home/pcvs"
-alias projcvs="env CVS_RSH=ssh cvs -d rafan@projcvs.FreeBSD.org:/home/projcvs"
-#alias scvs="env CVS_RSH=ssh cvs -d rafan@ncvs.FreeBSD.org:/home/ncvs"
-export PSVN="svn+ssh://svn.freebsd.org/base"
-alias ncvs="ssh -fNM ncvs.FreeBSD.org"
-alias tb="ssh -fNM svm.bioinfo.tw"
-
 if [ "${OS}" = "linux" -o "${OS}" = "cygwin" ]; then
 	alias colorls="/bin/ls -F --show-control-chars --color=always"
 	alias dict="/usr/bin/dict"
@@ -148,12 +111,6 @@ if [ "${OS}" = "linux" -o "${OS}" = "cygwin" ]; then
 	alias s="/usr/bin/screen"
 	alias tar="env LANG=${_ENG_LOCALE} /bin/tar"
 	alias top="/usr/bin/top -d 1"
-fi
-
-if [ "${OS}" = "solaris" ]; then
-	alias colorls="/usr/local/bin/gnuls -FG --show-control-chars --color=always"
-	alias less="/usr/local/bin/less"
-	alias top="/usr/local/bin/top -s1"
 fi
 
 function svnid() {
@@ -170,15 +127,6 @@ function svndi() {
 
 function svkdi() {
 	svk di | perl -e '$p = $n = 0; while(<>) {if (/^-[^-]/) {$n++;} elsif (/^\+[^+]/) {$p++;}} printf("+%d -%d\n", $p,$n);'
-}
-
-# ssh + screen title
-function ss() {
-	local last=${!#}
-	# XXX alias does not work here
-	printf '\033k\033\\$ %s:\n' "$last"
-	#screen -t "$ |$last"":" /usr/bin/ssh -2 -4 -C "$@"
-	ssh "$@"
 }
 
 # stuff that only needs when i login
@@ -201,11 +149,6 @@ for i in /usr/local/etc /etc; do
 		. ${i}/bash_completion
 	fi
 done
-
-# portupgrade
-if [ -f /usr/local/share/examples/pkgtools/bash/complete.sample ]; then
-	. /usr/local/share/examples/pkgtools/bash/complete.sample
-fi
 
 # portmaster
 if [ -f /usr/local/share/portmaster/bash-completions ]; then
