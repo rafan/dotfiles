@@ -29,8 +29,9 @@ set hls
 set nocompatible
 set secure
 " shiftwidth
-" set sw=2
-" set tabstop=8
+set sw=4
+set tabstop=4
+set expandtab
 set smarttab
 " set foldmethod=indent
 set nowrap
