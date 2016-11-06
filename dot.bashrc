@@ -45,12 +45,17 @@ function color_prompt
 		fi;
 	fi
 
-	PS1="${NORMAL}${B_CYAN}\u@\h${NORMAL}${JAILED}|${LANG#zh_TW.} [${B_PURPLE}\w${NORMAL}] (${B_YELLOW}\A${NORMAL})"
+    if [ -f ~/.git-prompt.sh ]; then
+        . ~/.git-prompt.sh
+        GIT_PROMPT='$(__git_ps1 "(%s)")'
+    fi
+
+	PS1="${NORMAL}${B_CYAN}\u@\h${NORMAL}${JAILED}${GIT_PROMPT} [${B_PURPLE}\w${NORMAL}] (${B_YELLOW}\A${NORMAL})"
 
 	if [ ! -z "$WINDOW" ]; then
-		PS1="${PS1} [${CYAN}W$WINDOW${NORMAL}]${SHTITLE}\$ "
+		PS1="${PS1}\n [${CYAN}W$WINDOW${NORMAL}]${SHTITLE}\$ "
 	else
-		PS1="${PS1}\$ "
+		PS1="${PS1}\n\$ "
 	fi
 	export PS1
 }
@@ -87,7 +92,7 @@ alias psa="/bin/ps awx"
 alias psr="psa -U root"
 alias perldoc="LANG=C perldoc"
 alias r="/usr/bin/fetch -q -o /dev/stdout 'http://www.random.org/cgi-bin/randnum?num=1&min=0&max=1&col=1'"
-alias s="/usr/local/bin/screen"
+alias s="tmux"
 alias ssh="/usr/bin/ssh -2 -4 -C"
 alias sshfs="sshfs -o workaround=rename -o reconnect"
 alias scp="/usr/bin/scp -2 -4 -C"
@@ -108,25 +113,12 @@ if [ "${OS}" = "linux" -o "${OS}" = "cygwin" ]; then
 	alias dict="/usr/bin/dict"
 	alias grep="/bin/egrep --mmap"
 	alias mutt="/usr/bin/mutt -y"
-	alias s="/usr/bin/screen"
 	alias tar="env LANG=${_ENG_LOCALE} /bin/tar"
 	alias top="/usr/bin/top -d 1"
 fi
 
-function svnid() {
-	svn ps svn:keywords Id "$@"
-}
-
-function svkid() {
-	svk ps svn:keywords Id "$@"
-}
-
-function svndi() {
-	svn di | perl -e '$p = $n = 0; while(<>) {if (/^-[^-]/) {$n++;} elsif (/^\+[^+]/) {$p++;}} printf("+%d -%d\n", $p,$n);'
-}
-
-function svkdi() {
-	svk di | perl -e '$p = $n = 0; while(<>) {if (/^-[^-]/) {$n++;} elsif (/^\+[^+]/) {$p++;}} printf("+%d -%d\n", $p,$n);'
+function gitdi() {
+	git diff | perl -e '$p = $n = 0; while(<>) {if (/^-[^-]/) {$n++;} elsif (/^\+[^+]/) {$p++;}} printf("+%d -%d\n", $p,$n);'
 }
 
 # stuff that only needs when i login
@@ -153,6 +145,19 @@ done
 # portmaster
 if [ -f /usr/local/share/portmaster/bash-completions ]; then
 	. /usr/local/share/portmaster/bash-completions
+fi
+
+test_ssh_agent() {
+    ssh-add -l >/dev/null 2>&1
+    if [ $? -eq 2 ]; then
+        return 0
+    fi
+    return 1
+}
+
+# all kinds of bash completion
+if [ -f "$HOME/.bashrc.git-completion" ]; then
+    . $HOME/.bashrc.git-completion
 fi
 
 # local bashrc
