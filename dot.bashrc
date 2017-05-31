@@ -2,6 +2,8 @@
 # $Id: dot.bashrc 2948 2011-01-10 03:03:18Z rafan $
 #
 
+umask 0077
+
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/bin:/usr/local/sbin:/usr/X11R6/bin:$HOME/bin; export PATH
 
 OS=${OSTYPE/[^a-z]*/}
