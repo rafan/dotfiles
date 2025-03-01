@@ -21,7 +21,8 @@ crt=24;		export crt
 MAILCHECK=600;	export MAILCHECK
 
 export CLICOLOR_FORCE
-export LANG=zh_TW.UTF-8
+export LANG=en_US.UTF-8
+unset LC_CTYPE
 _ENG_LOCALE=en_US.UTF-8
 export LC_MESSAGES=C
 export LC_TIME=C
@@ -46,6 +47,9 @@ function color_prompt
 			JAILED="${B_RED}[J]${NORMAL}"
 		fi;
 	fi
+    if [ -f "/.dockerenv" ]; then
+        JAILED="${B_RED}[C]${NORMAL}"
+    fi
 
     if [ -f ~/.git-prompt.sh ]; then
         . ~/.git-prompt.sh
@@ -77,8 +81,7 @@ alias dict="env LC_CTYPE=${_ENG_LOCALE} /usr/local/bin/dict"
 alias finger="env LC_CTYPE=${_ENG_LOCALE} /usr/bin/finger"
 alias ftp="env LC_CTYPE=${_ENG_LOCALE} /usr/bin/ftp"
 alias g="grep"
-alias grep="env LANG=${_ENG_LOCALE} /usr/bin/egrep --color=auto --mmap"
-alias irssi="/usr/local/bin/irssi"
+alias grep="env LANG=${_ENG_LOCALE} /usr/bin/egrep --color=auto"
 alias l="/usr/bin/last"
 alias less="/usr/bin/less"
 alias lftp="env LANG=${_ENG_LOCALE} lftp"
@@ -97,8 +100,7 @@ alias r="/usr/bin/fetch -q -o /dev/stdout 'http://www.random.org/cgi-bin/randnum
 alias s="tmux"
 alias ssh="/usr/bin/ssh -2 -4 -C"
 alias sshfs="sshfs -o workaround=rename -o reconnect"
-alias scp="/usr/bin/scp -2 -4 -C"
-alias sort="env LANG=C /usr/bin/sort"
+alias sort="env LANG=C sort"
 alias startx="exec startx"
 alias t="telnet"
 alias tar="env LANG=${_ENG_LOCALE} /usr/bin/tar"
@@ -108,12 +110,12 @@ alias top="/usr/bin/top -s1"
 alias vncviewer="vncviewer -encodings 'copyrect tight hextile zlib corre rre' -compresslevel 9 -quality 9"
 alias wall="env LC_CTYPE=${_ENG_LOCALE} /usr/bin/wall"
 alias write="env LC_CTYPE=${_ENG_LOCALE} /usr/bin/write"
-alias zg="/usr/bin/zgrep --mmap"
+alias zg="/usr/bin/zgrep"
 
 if [ "${OS}" = "linux" -o "${OS}" = "cygwin" ]; then
 	alias colorls="/bin/ls -F --show-control-chars --color=always"
 	alias dict="/usr/bin/dict"
-	alias grep="/bin/egrep --mmap"
+	alias grep="/bin/egrep"
 	alias mutt="/usr/bin/mutt -y"
 	alias tar="env LANG=${_ENG_LOCALE} /bin/tar"
 	alias top="/usr/bin/top -d 1"

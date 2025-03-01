@@ -1,15 +1,17 @@
 [color]
-branch = always
-diff = always
+    branch = always
+    diff = always
 
 [merge]
-tool = vimdiff
+    tool = vimdiff
 
 [alias]
-co = checkout
-ci = commit
-st = status
-di = diff
+    br = branch
+    ci = commit
+    co = checkout
+    di = diff
+    st = status
+    lol = log --pretty=oneline --abbrev-commit  --graph --decorate --all
 
 [include]
     path = ~/.gitconfig.local

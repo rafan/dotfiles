@@ -1,0 +1,7 @@
+Protocol 2
+Compression yes
+
+Host *
+    ForwardAgent no
+    HashKnownHosts yes
+    ServerAliveInterval 900

@@ -56,6 +56,9 @@ highlight Comment ctermfg=darkcyan
 highlight Search term=reverse ctermbg=4 ctermfg=7
 " set background=light
 
+" Crontabs must be edited in place
+au BufRead /tmp/crontab* :set backupcopy=yes
+
 " FreeBSD Doc Project
 augroup sgmledit
   autocmd FileType sgml set formatoptions=cq2l " Special formatting options
@@ -111,9 +114,6 @@ if version >= 700
   au BufNewFile,BufRead *.txt,*.tex     set spell
   au BufNewFile,BufRead *.tex set expandtab sw=2 ts=2
   autocmd FileType mail setlocal spell spelllang=en
-
-  " Crontabs must be edited in place
-  au BufRead /tmp/crontab* :set backupcopy=yes
 
   au BufRead /tmp/cvs* setlocal spell spelllang=en
 
