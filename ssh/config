@@ -6,4 +6,4 @@ Host *
     HashKnownHosts yes
     ServerAliveInterval 900
 
-Include ~/.ssh/local_ssh_config
+Include ~/.ssh/config.local
