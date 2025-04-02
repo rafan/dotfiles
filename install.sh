@@ -19,4 +19,4 @@ rm -f ~/.vim && /bin/ln -fs $basedir/vim ~/.vim
 
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
-/bin/ln -fs $basedir/ssh/config ~/.ssh/config
+/bin/ln -fs ../$basedir/ssh/config ~/.ssh/config
